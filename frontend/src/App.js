@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import PomodoroTimer from 'react-pomodoro-timer';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  const [playlistId, setPlaylistId] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlaylistSelect = (playlistId) => {
+    setPlaylistId(playlistId);
+  };
+
+  const handleStartTimer = () => {
+    setIsPlaying(true);
+
+    axios.post('/play', { playlistId });
+  };
+
+  const handlePauseTimer = () => {
+    setIsPlaying(false);
+
+    axios.post('/pause');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>DevDance</h1>
+
+      <select value={playlistId} onChange={(e) => handlePlaylistSelect(e.target.value)}>
+        <option value="">Select a playlist</option>
+        {spotifyPlaylists.map((playlist) => (
+          <option key={playlist.id} value={playlist.id}>
+            {playlist.name}
+          </option>
+        ))}
+      </select>
+
+      <PomodoroTimer
+        isRunning={isPlaying}
+        onStart={handleStartTimer}
+        onPause={handlePauseTimer}
+      />
     </div>
   );
-}
+};
 
 export default App;
