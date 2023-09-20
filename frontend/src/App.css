@@ -3,13 +3,14 @@ body, html {
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .app {
-  background-color: #282c34;
+  background: url('./images/LOTR Main Background.jpeg') no-repeat center center fixed;
+  background-size: cover;
   min-height: 100vh;
-  color: white;
+  color: #f4e4d3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,6 +21,9 @@ body, html {
 .app-header {
   font-size: calc(15px + 2vmin);
   margin-bottom: 30px;
+  border: 3px solid #d2b48c;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .pomodoro-container {
@@ -30,33 +34,19 @@ body, html {
   gap: 20px;
 }
 
-.pomodoro-button, .spotify-button {
+.pomodoro-button {
   border: none;
   padding: 15px 30px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 18px;
+  background-color: #d2b48c; /* A tan color reminiscent of parchment */
+  color: #3d2917; /* A deep brown */
   transition: background-color 0.3s ease;
-}
-
-.pomodoro-button {
-  background-color: #61dafb;
-  margin: 10px;
-  color: white;
+  box-shadow: 2px 2px 4px #000;
 }
 
 .pomodoro-button:hover {
-  background-color: #4fa8d5;
+  background-color: #b69b72;
 }
-
-.spotify-button {
-  background-color: #1DB954;
-  color: white;
-}
-
-.spotify-button:hover {
-  background-color: #1a9340;
-}
-
-
 
