@@ -1,54 +1,42 @@
 const express = require('express');
-const SpotifyWebApi = require('spotify-web-api-js');
+const axios = require('axios');
+const qs = require('qs');
 
 const app = express();
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: 'YOUR_SPOTIFY_CLIENT_ID',
-  clientSecret: 'YOUR_SPOTIFY_CLIENT_SECRET',
-  redirectUri: 'http://localhost:3000/callback',
-});
-
-app.get('/login', (req, res) => {
-  const scopes = ['playlist-read-private', 'playlist-modify-public'];
-  const authUrl = spotifyApi.createAuthorizeURL(scopes);
-
-  res.redirect(authUrl);
-});
-
-app.get('/callback', async (req, res) => {
+app.get("/callback", async (req, res) => {
   const code = req.query.code;
+  try {
+    const tokenResponse = await axios({
+      method: "post",
+      url: "https://accounts.spotify.com/api/token",
+      data: qs.stringify({
+        grant_type: "authorization_code",
+        code: code,
+        redirect_uri: "http://localhost:3000/callback",
+        client_id: "4d1fe896872e4fd18b145d6c7492af36",
+        client_secret: "381f7034746643fc833ab903be1d65c3",
+      }),
+      headers: {
+        "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    });
 
-  const { accessToken, refreshToken } = await spotifyApi.exchangeCodeForToken(code);
+    // Store the received tokens for this user session
+    const accessToken = tokenResponse.data.access_token;
+    const refreshToken = tokenResponse.data.refresh_token;
 
-  spotifyApi.setAccessToken(accessToken);
-  spotifyApi.setRefreshToken(refreshToken);
-
-  res.redirect('/');
+    // ...store these tokens and use them in subsequent requests...
+    
+    // Redirect the user back to the frontend app
+    res.redirect("http://localhost:3000");
+  } catch (error) {
+    console.error("Error fetching tokens", error);
+    res.status(500).send("Error fetching tokens");
+  }
 });
 
-app.get('/playlist', async (req, res) => {
-  const playlists = await spotifyApi.getUserPlaylists();
-
-  res.send(playlists);
-});
-
-app.post('/play', async (req, res) => {
-  const playlistId = req.body.playlistId;
-
-  await spotifyApi.startPlayback({
-    uris: [playlistId]
-  });
-
-  res.send('Playing playlist');
-});
-
-app.post('/pause', async (req, res) => {
-  await spotifyApi.pausePlayback();
-
-  res.send('Pausing playback');
-});
-
-app.listen(5000, () => {
-  console.log('Server listening on port 5000');
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
