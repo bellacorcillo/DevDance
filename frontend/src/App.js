@@ -1,84 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: null,
-      timerStarted: false,
-      timerTime: 25 * 60 * 1000 // 25 minutes in milliseconds
-    };
-  }
+function App() {
+    const [isConnectedToSpotify, setIsConnectedToSpotify] = useState(false);
+    const [timer, setTimer] = useState(null);
+    const [timeRemaining, setTimeRemaining] = useState(0);
 
-  componentDidMount() {
-    // Check for token in URL
-    const token = new URLSearchParams(window.location.search).get('token');
-    if (token) {
-      this.setState({ token: token });
-    }
-  }
-
-  connectToSpotify = () => {
-    window.location.href = '/login'; // Redirects user to login endpoint (backend should handle this)
-  }
-
-  startTimer = () => {
-    if (!this.state.timerStarted) {
-      this.timer = setInterval(() => {
-        const newTime = this.state.timerTime - 1000;
-        if (newTime >= 0) {
-          this.setState({
-            timerTime: newTime
-          });
-        } else {
-          clearInterval(this.timer);
-          // Play Spotify music here, if you'd like, when timer ends.
+    useEffect(() => {
+        let intervalId;
+        if (timer) {
+            intervalId = setInterval(() => {
+                const newTime = timeRemaining - 1000; // reduce by one second
+                setTimeRemaining(newTime);
+                if (newTime <= 0) {
+                    clearInterval(intervalId);
+                    if (timer === 'regular') alert('Time for a 5-minute dance break!');
+                    if (timer === 'extended') alert('Time for a 15-minute dance break!');
+                    setTimer(null);
+                }
+            }, 1000);
         }
-      }, 1000);
-      this.setState({ timerStarted: true });
-    }
-  };
+        return () => clearInterval(intervalId);  // Cleanup on unmount
+    }, [timer, timeRemaining]);
 
-  resetTimer = () => {
-    clearInterval(this.timer);
-    this.setState({
-      timerStarted: false,
-      timerTime: 25 * 60 * 1000
-    });
-  };
+    const startRegularPomodoro = () => {
+        setTimer('regular');
+        setTimeRemaining(25 * 60 * 1000);
+    };
 
-  render() {
-    const minutes = Math.floor(this.state.timerTime / (60 * 1000));
-    const seconds = ((this.state.timerTime % (60 * 1000)) / 1000).toFixed(0);
+    const startExtendedPomodoro = () => {
+        setTimer('extended');
+        setTimeRemaining(45 * 60 * 1000);
+    };
 
     return (
-      <div className="App">
-        <header className="App-header">
-
-          {/* If no Spotify token, display the connect button */}
-          {!this.state.token && (
-            <button onClick={this.connectToSpotify}>Connect to Spotify</button>
-          )}
-
-          {/* Display Spotify data when user is connected */}
-          {this.state.token && (
-            <div>
-              <h3>Your Spotify Info Here</h3>
-              {/* Your logic to display Spotify data */}
+        <div className="app">
+            <header className="app-header">
+                🎵 DevDance - Let's Groove While We Work! 💃
+            </header>
+            <div className="pomodoro-container">
+                <button className="pomodoro-button" onClick={startRegularPomodoro}>
+                    25 minutes + 5 min break
+                </button>
+                <button className="pomodoro-button" onClick={startExtendedPomodoro}>
+                    45 minutes + 15 min break
+                </button>
             </div>
-          )}
-
-          {/* Pomodoro Logic */}
-          <div className="pomodoro-timer">
-            {minutes}:{seconds < 10 ? '0' : ''}
-            {seconds}
-          </div>
-          <button onClick={this.startTimer}>Start Pomodoro</button>
-          <button onClick={this.resetTimer}>Reset Pomodoro</button>
-        </header>
-      </div>
+            {!isConnectedToSpotify && (
+                <button className="spotify-button" onClick={() => window.location.href='/login'}>
+                    Connect to Spotify
+                </button>
+            )}
+        </div>
     );
-  }
 }
 
 export default App;
+
+
+
