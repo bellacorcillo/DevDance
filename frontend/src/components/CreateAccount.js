@@ -35,7 +35,7 @@ class CreateAccount extends React.Component {
 
         try {
             // Send a POST request to the /register route in the backend
-            await axios.post('http://localhost:5000/register', {
+            await axios.post('http://localhost:5000/create-account', {
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,

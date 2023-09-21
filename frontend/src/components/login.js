@@ -39,7 +39,6 @@ class Login extends React.Component {
             
             this.props.history.push('/home');
         } catch (error) {
-            // Handle login error by setting an error message
             this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
         }
     }

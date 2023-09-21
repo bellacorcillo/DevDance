@@ -2,23 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
-const User = require('../models/Users'); 
-
-// Logging function for debugging
-const logRequest = (req) => {
-    console.log(`Received request: ${req.method} ${req.url}`);
-};
+const User = require('../models/Users');
 
 // Registration Route
-router.post('/register', [
+router.post('/create-account', [
     check('username', 'Username is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
 ], async (req, res) => {
-    // Log the request
-    logRequest(req);
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -41,8 +34,22 @@ router.post('/register', [
 
         await user.save();
 
-        // Send a positive response
-        res.json({ msg: 'User registered successfully' });
+        // Generate and sign a JWT
+        const payload = {
+            user: {
+                id: user.id,
+            },
+        };
+
+        jwt.sign(
+            payload,
+            process.env.JWT_SECRET, // Use the JWT secret from .env file
+            { expiresIn: 3600 },
+            (err, token) => {
+                if (err) throw err;
+                res.json({ token });
+            }
+        );
 
     } catch (err) {
         console.error(err.message);
@@ -50,43 +57,14 @@ router.post('/register', [
     }
 });
 
-// Login Route
+// Login Route (Keep this route for user login)
 router.post('/login', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
 ], async (req, res) => {
-    // Log the request
-    logRequest(req);
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { email, password } = req.body;
-
-    try {
-        // Check if user exists
-        let user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        }
-
-        // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        }
-
-        // Here you'd typically return a JWT or some form of token for user authentication.
-        res.json({ msg: 'Logged in successfully' });
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
 });
 
 module.exports = router;
+
 
 
