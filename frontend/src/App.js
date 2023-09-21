@@ -4,6 +4,8 @@ import MainPage from './components/MainPage';
 import Login from './components/login';
 import CreateAccount from './components/CreateAccount';
 import PostLogin from './components/PostLogin';
+import TimerComponent from './components/TimerComponent';
+import BreakPage from './components/BreakPage'; // Import the BreakPage component
 
 function App() {
   const appStyle = {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/post-login/*" element={<PostLogin />} />
+          <Route path="/timer" element={<TimerComponent />} />
+          <Route path="/break" element={<BreakPage />} /> {/* Add this route for the BreakPage component */}
         </Routes>
       </div>
     </Router>
