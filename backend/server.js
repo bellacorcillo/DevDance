@@ -1,7 +1,10 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+// Require our user routes
+const userRoutes = require('./routes/userRoutes');
+
 
 const app = express();
 
@@ -14,11 +17,8 @@ mongoose.connect('mongodb://localhost:27017/lembasbreak', {
   useUnifiedTopology: true,
 });
 
-// Require our routes
-const userRoutes = require('./routes/userRoutes');
-
-// Use our routes
-app.use('/api', userRoutes);
+// Use our user routes
+app.use(userRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {

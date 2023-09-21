@@ -27,16 +27,16 @@ class Login extends React.Component {
         event.preventDefault();
 
         try {
-            // Send a POST request to the /login route with user credentials
+            
             const response = await axios.post('http://localhost:5000/login', {
                 email: this.state.email,
                 password: this.state.password,
             });
             
-            // Store the user token in local storage (you may want to use a more secure method)
+            
             localStorage.setItem('token', response.data.token);
 
-            // Redirect to the homepage or the desired location after successful login
+            
             this.props.history.push('/home');
         } catch (error) {
             // Handle login error by setting an error message

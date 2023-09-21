@@ -3,7 +3,12 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 
-const User = require('../models/User');  // Assuming your User model file is named "User.js" in the models folder.
+const User = require('../models/Users'); 
+
+// Logging function for debugging
+const logRequest = (req) => {
+    console.log(`Received request: ${req.method} ${req.url}`);
+};
 
 // Registration Route
 router.post('/register', [
@@ -11,6 +16,9 @@ router.post('/register', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
 ], async (req, res) => {
+    // Log the request
+    logRequest(req);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -47,6 +55,9 @@ router.post('/login', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
 ], async (req, res) => {
+    // Log the request
+    logRequest(req);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -77,4 +88,5 @@ router.post('/login', [
 });
 
 module.exports = router;
+
 

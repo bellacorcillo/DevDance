@@ -1,62 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import "./TimerComponent.css";
 
 function TimerComponent() {
-  const history = useHistory();
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+  const navigate = useNavigate();
+  const [timerDuration, setTimerDuration] = useState(0);
 
-  const startTimer = (minutes, seconds) => {
-    setMinutes(minutes);
-    setSeconds(seconds);
-    setIsRunning(true);
-  };
-
-  const stopTimer = () => {
-    setIsRunning(false);
-    setMinutes(0);
-    setSeconds(0);
+  const startTimer = (duration) => {
+    setTimerDuration(duration);
+    // Start your countdown logic here
   };
 
   useEffect(() => {
-    let timer;
-    if (isRunning) {
-      timer = setInterval(() => {
-        if (minutes === 0 && seconds === 0) {
-          // Timer is done
-          stopTimer();
-          // Redirect to the break page
-          history.push('/break');
-        } else if (seconds === 0) {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        } else {
-          setSeconds(seconds - 1);
-        }
-      }, 1000);
-    } else {
-      clearInterval(timer);
+    if (timerDuration === 0) {
+      // Timer has reached zero, navigate to the break page
+      navigate(`/break?duration=${timerDuration === 25 ? 5 : 15}`);
     }
-
-    return () => clearInterval(timer);
-  }, [minutes, seconds, isRunning, history]);
+  }, [timerDuration, navigate]);
 
   return (
     <div>
       <h2>Timer</h2>
-      <button onClick={() => startTimer(25, 0)}>Start 25-Minute Timer</button>
-      <button onClick={() => startTimer(45, 0)}>Start 45-Minute Timer</button>
-      {isRunning ? (
-        <div>
-          <p>
-            {minutes < 10 ? '0' : ''}
-            {minutes}:{seconds < 10 ? '0' : ''}
-            {seconds}
-          </p>
-          <button onClick={stopTimer}>Stop</button>
-        </div>
-      ) : null}
+      <button onClick={() => startTimer(25)}>Start 25-Minute Timer</button>
+      <button onClick={() => startTimer(45)}>Start 45-Minute Timer</button>
     </div>
   );
 }

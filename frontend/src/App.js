@@ -16,16 +16,51 @@ function App() {
     minHeight: '100vh',
   };
 
+  // Logging function for debugging
+  const logRequest = (path) => {
+    console.log(`Received request for path: ${path}`);
+  };
+
   return (
     <Router>
       <div style={appStyle}>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/post-login/*" element={<PostLogin />} />
-          <Route path="/timer" element={<TimerComponent />} />
-          <Route path="/break" element={<BreakPage />} /> {/* Add this route for the BreakPage component */}
+          <Route
+            path="/"
+            element={
+              <MainPage />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Login />
+            }
+          />
+          <Route
+            path="/create-account"
+            element={
+              <CreateAccount />
+            }
+          />
+          <Route
+            path="/post-login/*"
+            element={
+              <PostLogin />
+            }
+          />
+          <Route
+            path="/timer"
+            element={
+              <TimerComponent />
+            }
+          />
+          <Route
+            path="/break"
+            element={
+              <BreakPage />
+            }
+          />
         </Routes>
       </div>
     </Router>
@@ -33,4 +68,5 @@ function App() {
 }
 
 export default App;
+
 
