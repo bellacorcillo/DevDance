@@ -1,12 +1,10 @@
 import React from 'react';
 import "./PostLogin.css";
-import mainBackground from 'url(/mainbackground.jpg)'; // Import the background image
 
 function PostLogin() {
     return React.createElement('div', {
         className: 'post-login-container',
         style: {
-            backgroundImage: `url(${mainBackground})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',

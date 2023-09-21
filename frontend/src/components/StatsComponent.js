@@ -1,12 +1,13 @@
 import React from 'react';
 
-function TimerComponent() {
+function StatsComponent() {
   return (
     <div>
-      {/* Timer functionality and display here */}
-      Stats
+      {/* Implement your stats functionality and display here */}
+      <h2>Stats</h2>
+      {/* Add your stats content here */}
     </div>
   );
 }
 
-export default TimerComponent;
+export default StatsComponent;

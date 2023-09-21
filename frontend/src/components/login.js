@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./login.css";
-import mainBackground from 'url(/mainbackground.jpg)'; // Import the background image
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -10,12 +9,13 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        // Implement login logic here.
-        navigate('/post-login'); // Navigate to the post-login page
+        // Implement login logic here, e.g., making a POST request to your backend
+        // Upon successful login, you can navigate to the post-login page
+        navigate('/post-login');
     };
 
     return (
-        <div className="login-container" style={{ backgroundImage: `url(${mainBackground})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="login-container">
             <h2>Login</h2>
             <input 
                 type="email" 
@@ -35,3 +35,4 @@ function Login() {
 }
 
 export default Login;
+

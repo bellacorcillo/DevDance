@@ -6,7 +6,7 @@ function MainPage() {
     const navigate = useNavigate();
 
     const mainPageStyle = {
-        backgroundImage: 'url(/mainbackground.jpg)',
+        backgroundImage: 'url(/mainbackground.png)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center'

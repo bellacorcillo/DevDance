@@ -9,8 +9,9 @@ function CreateAccount() {
     const navigate = useNavigate();
 
     const handleAccountCreation = () => {
-        // Implement account creation logic here.
-        navigate('/login');
+        // Implement account creation logic here, e.g., making a POST request to your backend
+        // Upon successful account creation, you can navigate to the post-login page
+        navigate('/post-login');
     };
 
     return (
