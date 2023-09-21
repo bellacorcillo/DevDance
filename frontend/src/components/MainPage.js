@@ -14,8 +14,8 @@ function MainPage() {
 
     return (
         <div className="main-container" style={mainPageStyle}>
-            <h1 className="main-header">Alatulya, Mellon</h1>
-            <p className="subtitle">Welcome, Friend!</p>
+            <h1 className="main-header">Lembas Break 🍞🍃</h1>
+            <p className="subtitle">From the Shire to Mordor, every traveler needs their Lembas breaks.</p>
             <div className="button-group">
                 <button className="main-button" onClick={() => navigate('/login')}>Login</button>
                 <button className="main-button" onClick={() => navigate('/create-account')}>Create Account</button>

@@ -1,9 +1,30 @@
 const mongoose = require('mongoose');
 
 const statsSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    pomodorosCompleted: { type: Number, default: 0 },
-    lastUpdated: { type: Date, default: Date.now }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to the User model
+  },
+  totalPomodoros: {
+    type: Number,
+    required: true,
+  },
+  totalBreaks: {
+    type: Number,
+    required: true,
+  },
+  longestStreak: {
+    type: Number,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Stats', statsSchema);
+

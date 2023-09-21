@@ -23,7 +23,7 @@ router.post('/', [auth, [
         let stats = await Stats.findOne({ user: req.user.id });
 
         if (!stats) {
-            // If no stats for user, create new
+            // If no stats for the user, create new
             stats = new Stats({
                 user: req.user.id,
                 pomodoros,
@@ -60,4 +60,3 @@ router.get('/', auth, async (req, res) => {
 });
 
 module.exports = router;
-
