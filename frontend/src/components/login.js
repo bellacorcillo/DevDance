@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import './login.css';
 
-
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -12,28 +11,35 @@ class Login extends React.Component {
             errorMessage: '',
         };
 
+        // Bind event handlers
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Handle input field changes
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
 
+    // Handle form submission
     async handleSubmit(event) {
         event.preventDefault();
 
         try {
-            const response = await axios.post('/api/login', {
+            // Send a POST request to the /login route with user credentials
+            const response = await axios.post('http://localhost:5000/login', {
                 email: this.state.email,
                 password: this.state.password,
             });
             
+            // Store the user token in local storage (you may want to use a more secure method)
             localStorage.setItem('token', response.data.token);
-            // Redirect to homepage or wherever you want after a successful login
+
+            // Redirect to the homepage or the desired location after successful login
             this.props.history.push('/home');
         } catch (error) {
+            // Handle login error by setting an error message
             this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
         }
     }
@@ -72,3 +78,4 @@ class Login extends React.Component {
 }
 
 export default Login;
+

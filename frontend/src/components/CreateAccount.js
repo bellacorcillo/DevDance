@@ -13,15 +13,18 @@ class CreateAccount extends React.Component {
             errorMessage: '',
         };
 
+        // Bind event handlers
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Handle input field changes
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
 
+    // Handle form submission
     async handleSubmit(event) {
         event.preventDefault();
 
@@ -31,13 +34,14 @@ class CreateAccount extends React.Component {
         }
 
         try {
-            await axios.post('/api/register', {
+            // Send a POST request to the /register route in the backend
+            await axios.post('http://localhost:5000/register', {
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,
             });
 
-            // Redirect to login page or wherever you'd like after a successful registration
+            // Redirect to the login page or wherever you'd like after a successful registration
             this.props.history.push('/login');
         } catch (error) {
             this.setState({ errorMessage: 'Registration failed. Please try again.' });
