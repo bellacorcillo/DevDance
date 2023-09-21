@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/User'); // Assuming your User model file is named "User.js" in the models folder.
+const User = require('../models/Users');
 
 // Logging function for debugging
 const logRequest = (req) => {

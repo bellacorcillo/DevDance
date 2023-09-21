@@ -5,7 +5,7 @@ import Login from './components/login';
 import CreateAccount from './components/CreateAccount';
 import PostLogin from './components/PostLogin';
 import TimerComponent from './components/TimerComponent';
-import BreakPage from './components/BreakPage'; // Import the BreakPage component
+import BreakPage from './components/BreakPage';
 
 function App() {
   const appStyle = {
@@ -16,51 +16,16 @@ function App() {
     minHeight: '100vh',
   };
 
-  // Logging function for debugging
-  const logRequest = (path) => {
-    console.log(`Received request for path: ${path}`);
-  };
-
   return (
     <Router>
       <div style={appStyle}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <MainPage />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Login />
-            }
-          />
-          <Route
-            path="/create-account"
-            element={
-              <CreateAccount />
-            }
-          />
-          <Route
-            path="/post-login/*"
-            element={
-              <PostLogin />
-            }
-          />
-          <Route
-            path="/timer"
-            element={
-              <TimerComponent />
-            }
-          />
-          <Route
-            path="/break"
-            element={
-              <BreakPage />
-            }
-          />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/post-login/*" element={<PostLogin />} />
+          <Route path="/timer" element={<TimerComponent />} />
+          <Route path="/break" element={<BreakPage />} />
         </Routes>
       </div>
     </Router>
@@ -68,5 +33,6 @@ function App() {
 }
 
 export default App;
+
 
 

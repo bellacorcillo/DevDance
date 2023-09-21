@@ -1,18 +1,43 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import './BreakPage.css';
 
 function BreakPage() {
-  const params = useParams();
-  const breakDuration = params.duration;
+  const shortBreakIdeas = [
+    'Stretch like a sleepy hobbit',
+    'Sip some Elven herbal tea',
+    'Listen to the Song of the Ents (nature sounds)',
+    'Recite some Elvish poetry',
+    'Tend to your mini herb garden'
+  ];
 
-  useEffect(() => {
-    // Start your break countdown logic here
-  }, [breakDuration]);
+  const longBreakIdeas = [
+    'Bake Lembas bread or seed cakes',
+    'Go on an "Unexpected Journey" around your home (aka tidy up a bit)',
+    'Practice your Elvish calligraphy',
+    'Engage in some Gollum-esque riddles',
+    'Meditate in the style of Galadriel',
+    'Play with your "Shadowfax" (if you have a pet)',
+    'Sketch a map of your "Shire"'
+  ];
 
   return (
-    <div>
-      <h2>Break</h2>
-      <p>Take a {breakDuration}-minute break!</p>
+    <div className="break-container">
+      <div className="break-column">
+        <div className="break-title">Short Break Ideas (Hobbit-Style)</div>
+        {shortBreakIdeas.map((idea, index) => (
+          <div className="break-item" key={index}>
+            {idea}
+          </div>
+        ))}
+      </div>
+      <div className="break-column">
+        <div className="break-title">Long Break Ideas (Elf-Inspired)</div>
+        {longBreakIdeas.map((idea, index) => (
+          <div className="break-item" key={index}>
+            {idea}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
