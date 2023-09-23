@@ -1,18 +1,22 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
+const createaccountRoutes = require('./routes/createaccountRoutes');
+const loginRoutes = require('./routes/loginRoutes');
+const statsRoutes = require('./routes/statsRoutes');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://isabellacorcillo:Bella121!841!@lembasbreak.kdka9a6.mongodb.net/lembasbreak', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-
 .then(() => {
   console.log('MongoDB connected successfully! 🎉');
 })
@@ -20,16 +24,20 @@ mongoose.connect('mongodb+srv://isabellacorcillo:Bella121!841!@lembasbreak.kdka9
   console.error('MongoDB connection error: ', err);
 });
 
-// User Routes
-app.use('/api', userRoutes);
+app.get('/', (req, res) => {
+  res.send('Server is up and running! 🌟');
+});
 
-// General Error Handling Middleware
+app.use('/users', userRoutes);
+app.use('/createaccount', createaccountRoutes);
+app.use('/login', loginRoutes);
+app.use('/stats', statsRoutes);
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
-const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🌟 Server is twinkling on port ${PORT} 🌟`);
 });

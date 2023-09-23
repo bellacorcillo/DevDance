@@ -1,0 +1,4 @@
+{
+    "jwtSecret": "default_secret",
+    "mongoUri": "mongodb://localhost:27017/default_db"
+  }  

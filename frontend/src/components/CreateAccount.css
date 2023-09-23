@@ -30,31 +30,30 @@ body, html {
     margin: auto;
 }
 
-
-h2 {
+.create-account-container h2 {
     font-size: 36px;
     font-family: "Creative Vintage Regular", sans-serif;
 }
 
-.error {
+.create-account-container .error {
     color: red;
     font-size: 16px;
     margin: 10px 0;
 }
 
-.input-group {
+.create-account-container .input-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
 }
 
-label {
+.create-account-container label {
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-input {
+.create-account-container input {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -62,7 +61,7 @@ input {
     width: 100%;
 }
 
-button {
+.create-account-container button {
     padding: 10px 20px;
     background-color: #f0d09c;
     border: none;
@@ -72,6 +71,6 @@ button {
     font-family: "Creative Vintage Regular", serif;
 }
 
-button:hover {
+.create-account-container button:hover {
     background-color: #e8c585;
 }

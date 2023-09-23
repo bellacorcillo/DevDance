@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
-const User = require('../models/User');
+const Users = require('../models/Users');
 const Stats = require('../models/Stats');
 
 // Logging function for debugging

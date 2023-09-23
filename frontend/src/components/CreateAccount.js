@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CreateAccount.css';
 
@@ -18,13 +18,24 @@ class CreateAccount extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // Handle input field changes
+    // Add a new lifecycle method to load the account page
+    async componentDidMount() {
+        try {
+            // Send a GET request to retrieve the account creation page
+            const response = await axios.get('http://localhost:5000/create-account');
+            this.setState({ isAccountPageLoaded: true });
+        } catch (error) {
+            console.error('Error:', error);
+            
+        }
+    }
+
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
 
-    // Handle form submission
+
     async handleSubmit(event) {
         event.preventDefault();
 
@@ -34,7 +45,7 @@ class CreateAccount extends React.Component {
         }
 
         try {
-            // Send a POST request to the /register route in the backend
+            // Send a POST request to the /create-account route in the backend
             await axios.post('http://localhost:5000/create-account', {
                 username: this.state.username,
                 email: this.state.email,
@@ -56,42 +67,42 @@ class CreateAccount extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="input-group">
                         <label>Username:</label>
-                        <input 
-                            type="text" 
-                            name="username" 
+                        <input
+                            type="text"
+                            name="username"
                             value={this.state.username}
                             onChange={this.handleInputChange}
-                            required 
+                            required
                         />
                     </div>
                     <div className="input-group">
                         <label>Email:</label>
-                        <input 
-                            type="email" 
-                            name="email" 
+                        <input
+                            type="email"
+                            name="email"
                             value={this.state.email}
                             onChange={this.handleInputChange}
-                            required 
+                            required
                         />
                     </div>
                     <div className="input-group">
                         <label>Password:</label>
-                        <input 
-                            type="password" 
-                            name="password" 
+                        <input
+                            type="password"
+                            name="password"
                             value={this.state.password}
                             onChange={this.handleInputChange}
-                            required 
+                            required
                         />
                     </div>
                     <div className="input-group">
                         <label>Confirm Password:</label>
-                        <input 
-                            type="password" 
-                            name="confirmPassword" 
+                        <input
+                            type="password"
+                            name="confirmPassword"
                             value={this.state.confirmPassword}
                             onChange={this.handleInputChange}
-                            required 
+                            required
                         />
                     </div>
                     <button type="submit">Create Account</button>

@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/Users');
+const User = require('../models/Users.js');
 
 // Registration Route
 router.post('/create-account', [
@@ -16,11 +16,10 @@ router.post('/create-account', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    
+
     const { username, email, password } = req.body;
 
     try {
-        // Check if user exists
         let user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
@@ -28,13 +27,11 @@ router.post('/create-account', [
 
         user = new User({ username, email, password });
 
-        // Encrypt password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 
         await user.save();
 
-        // Generate and sign a JWT
         const payload = {
             user: {
                 id: user.id,
@@ -43,14 +40,13 @@ router.post('/create-account', [
 
         jwt.sign(
             payload,
-            process.env.JWT_SECRET, // Use the JWT secret from .env file
+            process.env.JWT_SECRET,
             { expiresIn: 3600 },
             (err, token) => {
                 if (err) throw err;
                 res.json({ token });
             }
         );
-
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
@@ -62,6 +58,28 @@ router.post('/login', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
 ], async (req, res) => {
+    // ... (Your existing login code here)
+});
+
+// Route to seed data
+router.get('/data/seed', async (req, res) => {
+    const seedUsers = [
+        { username: 'sampleUser', email: 'sample@email.com', password: 'samplePassword' },
+        { username: 'sampleUser2', email: 'sample2@email.com', password: 'samplePassword2' },
+        // ... add more seed users here
+    ];
+
+    try {
+        for (let user of seedUsers) {
+            user.password = await bcrypt.hash(user.password, 10);
+        }
+
+        await User.insertMany(seedUsers);
+        res.status(201).json({ message: 'Seed data inserted successfully!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
 });
 
 module.exports = router;

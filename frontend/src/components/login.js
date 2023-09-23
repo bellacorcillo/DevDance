@@ -11,18 +11,15 @@ class Login extends React.Component {
             errorMessage: '',
         };
 
-        // Bind event handlers
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // Handle input field changes
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
 
-    // Handle form submission
     async handleSubmit(event) {
         event.preventDefault();
 

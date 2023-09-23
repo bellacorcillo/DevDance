@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const statsSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    ref: 'stats',
   },
   totalPomodoros: {
     type: Number,

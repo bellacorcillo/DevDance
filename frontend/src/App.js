@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainPage from './components/MainPage';
-import Login from './components/login';
 import CreateAccount from './components/CreateAccount';
+import Login from './components/login';
 import PostLogin from './components/PostLogin';
 import TimerComponent from './components/TimerComponent';
 import BreakPage from './components/BreakPage';
 import axios from 'axios';
+
+axios.defaults.baseURL = "http://localhost:5000";
 
 function App() {
   const appStyle = {
@@ -18,9 +20,8 @@ function App() {
   };
 
   const getUserList = async () => {
-    const response = await axios.get('http://localhost:3000/users');
+    const response = await axios.get('/create-account'); 
     const users = response.data;
-
     return users;
   };
 
@@ -52,5 +53,4 @@ function App() {
 }
 
 export default App;
-
 

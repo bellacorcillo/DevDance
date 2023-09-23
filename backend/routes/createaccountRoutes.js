@@ -1,16 +1,23 @@
 const express = require('express');
-const User = require('./models/Users');
+const User = require('../models/Users');
 const bcrypt = require('bcryptjs');
 
-// Create a Router object
 const router = express.Router();
 
-// Route to create a new account
 router.post('/create-account', async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
 
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'An account with this email already exists.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
       email,
@@ -19,12 +26,13 @@ router.post('/create-account', async (req, res) => {
 
     await newUser.save();
     res.status(201).json({ message: 'Account created successfully!' });
+
   } catch (error) {
-    res.status(500).json({ message: 'Oops! Something went wrong.' });
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
 
-// Route to login
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -42,8 +50,28 @@ router.post('/login', async (req, res) => {
 
     res.status(200).json({ message: 'Logged in successfully!' });
   } catch (error) {
-    res.status(500).json({ message: 'Oops! Something went wrong.' });
+    console.error(error);
+    res.status(500).json({ message: 'Oops! Something went wrong.', error: error.message });
+  }
+});
+
+router.get('/data/seed', async (req, res) => {
+  const seedUsers = [
+    { username: 'sampleUser', email: 'sample@email.com', password: 'hashedPasswordHere' },
+  ];
+
+  try {
+    for (let user of seedUsers) {
+      user.password = await bcrypt.hash(user.password, 10);
+    }
+
+    await User.insertMany(seedUsers);
+    res.status(201).json({ message: 'Seed data inserted successfully!' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
 
 module.exports = router;
+
