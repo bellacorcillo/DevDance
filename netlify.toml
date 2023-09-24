@@ -1,8 +1,4 @@
 [build]
-  publish = "frontend/build"
+  base = "path/to/your/frontend/folder/" # if your repo has both frontend and backend code
+  publish = "build/"
   command = "npm run build"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
