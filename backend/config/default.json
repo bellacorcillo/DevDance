@@ -1,4 +1,4 @@
 {
     "jwtSecret": "default_secret",
-    "mongoUri": "mongodb://localhost:27017/default_db"
+    "mongoUri": "mongodb+srv://isabellacorcillo:Bella121!841!@lembasbreak.kdka9a6.mongodb.net/"
   }  
