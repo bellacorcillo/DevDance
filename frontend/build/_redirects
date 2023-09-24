@@ -1,5 +1,0 @@
-# Redirect all traffic to index.html
-/*  /index.html  200
-
-# Alternatively, for a 404 page
-# /*  /404.html  404
