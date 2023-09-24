@@ -5,13 +5,15 @@ const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/Users');
+require('dotenv').config();
+
 
 // Logging function for debugging
 const logRequest = (req) => {
     console.log(`Received request: ${req.method} ${req.url}`);
 };
 
-// Login Route
+
 router.post('/', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
@@ -30,14 +32,18 @@ router.post('/', [
         // Check if user exists
         let user = await User.findOne({ email });
         if (!user) {
+            console.log('Invalid Credentials: User not found');
             return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
 
         // Check password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            console.log('Invalid Credentials: Password mismatch');
             return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
+
+        console.log('User logged in successfully');
 
         // Generate and sign a JWT
         const payload = {
@@ -48,7 +54,7 @@ router.post('/', [
 
         jwt.sign(
             payload,
-            '82280f0c508076773ed3d8ab1cf6b6fd9b4cf4b25ebec9d0c8677f70fca1319b',
+            process.env.JWT_SECRET,
             { expiresIn: 3600 },
             (err, token) => {
                 if (err) throw err;
@@ -57,9 +63,10 @@ router.post('/', [
         );
 
     } catch (err) {
-        console.error(err.message);
+        console.error('Login Error:', err.message);
         res.status(500).send('Server error');
     }
 });
+
 
 module.exports = router;

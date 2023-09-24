@@ -25,20 +25,54 @@ class Login extends React.Component {
 
         try {
             
-            const response = await axios.post('http://localhost:5000/login', {
+            const response = await axios.post('http://localhost:5000/login/', {
                 email: this.state.email,
                 password: this.state.password,
             });
             
-            
-            localStorage.setItem('token', response.data.token);
-
-            
-            this.props.history.push('/home');
+            if(response.data.token){
+                localStorage.setItem('token', response.data.token);
+                console.log(response);
+                window.location.href = '/home';
+            }
+            else{
+                this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
+            }
         } catch (error) {
-            this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.error('Error response from server:', error.response.data.message);
+                this.setState({ errorMessage: `login failed: ${error.response.data.message}` });
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response received:', error.request);
+                this.setState({ errorMessage: 'login failed: No response from server' });
+              } else {
+                // Something happened in setting up the request that triggered an error
+                console.error('Error setting up the request:', error.message);
+                this.setState({ errorMessage: `login failed: ${error.message}` });
+              }
         }
     }
+    // async handleSubmit(event) {
+    //     event.preventDefault();
+    
+    //     try {
+    //         const response = await axios.post('http://localhost:5000/login/', {
+    //             email: this.state.email,
+    //             password: this.state.password,
+    //         });
+    
+    //         if (response.status === 200) {
+    //             localStorage.setItem('token', response.data.token);
+    //             this.props.history.push('/home');
+    //         } else {
+    //             this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
+    //         }
+    //     } catch (error) {
+    //         this.setState({ errorMessage: 'Login failed. Please check your credentials.' });
+    //     }
+    // }
 
     render() {
         return (
