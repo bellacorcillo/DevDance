@@ -7,13 +7,16 @@ function Navbar() {
     <nav>
       <ul>
         <li>
-          <Link to="/postlogin">Home</Link>
+          <Link to="/postlogin">Home</Link> {/* Link to PostLogin.js */}
         </li>
         <li>
-          <Link to="/postlogin/timer">Timer</Link>
+          <Link to="/timer">Timer</Link> {/* Link to TimerComponent.js */}
         </li>
         <li>
-          <Link to="/postlogin/stats">Stats</Link>
+          <Link to="/stats">Stats</Link> {/* Link to StatsComponent.js */}
+        </li>
+        <li>
+          <Link to="/break">Break Ideas</Link> {/* Link to BreakPage.js */}
         </li>
       </ul>
     </nav>
@@ -21,3 +24,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

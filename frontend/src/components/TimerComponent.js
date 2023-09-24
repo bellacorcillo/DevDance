@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import "./TimerComponent.css";
+import Navbar from './Navbar'; // Import the Navbar component
+import './TimerComponent.css';
 
 function TimerComponent() {
   const [timerDuration, setTimerDuration] = useState(0);
@@ -46,6 +47,7 @@ function TimerComponent() {
 
   return (
     <div className="timer-component">
+      <Navbar /> {/* Include the Navbar component */}
       <h2>Timer</h2>
       <button onClick={() => startTimer(25)}>Start 25-Minute Timer</button>
       <button onClick={() => startTimer(45)}>Start 45-Minute Timer</button>

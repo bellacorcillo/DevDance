@@ -6,6 +6,7 @@ import Login from './components/login';
 import PostLogin from './components/PostLogin';
 import TimerComponent from './components/TimerComponent';
 import BreakPage from './components/BreakPage';
+import StatsComponent from './components/StatsComponent'; // Import your StatsComponent
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:5000";
@@ -43,9 +44,10 @@ function App() {
           <Route path="/" element={<MainPage users={users} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/post-login/*" element={<PostLogin />} />
+          <Route path="/postlogin" element={<PostLogin />} />
           <Route path="/timer" element={<TimerComponent />} />
           <Route path="/break" element={<BreakPage />} />
+          <Route path="/stats" element={<StatsComponent />} /> {/* Route for StatsComponent */}
         </Routes>
       </div>
     </Router>
@@ -53,4 +55,5 @@ function App() {
 }
 
 export default App;
+
 

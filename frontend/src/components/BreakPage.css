@@ -1,24 +1,25 @@
 .break-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .break-column {
-    flex: 1;
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 20px;
-  }
-  
-  .break-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .break-item {
-    margin-bottom: 10px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.break-column {
+  flex: 1;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 20px;
+}
+
+.break-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.break-item {
+  margin-bottom: 10px;
+}
+
   

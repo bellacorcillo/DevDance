@@ -1,0 +1,18 @@
+.stats-container {
+    background-color: #f2e3b8;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: "Creative Vintage Regular", serif;
+    color: #29513e;
+  }
+  
+  .stats-container h2 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .stats-container p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }

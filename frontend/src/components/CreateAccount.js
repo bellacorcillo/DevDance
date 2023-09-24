@@ -13,15 +13,12 @@ class CreateAccount extends React.Component {
             errorMessage: '',
         };
 
-        // Bind event handlers
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // Add a new lifecycle method to load the account page
     async componentDidMount() {
         try {
-            // Send a GET request to retrieve the account creation page
             const response = await axios.get('http://localhost:5000/create-account');
             this.setState({ isAccountPageLoaded: true });
             console.log(response);
@@ -46,26 +43,21 @@ class CreateAccount extends React.Component {
         }
 
         try {
-            // Send a POST request to the /create-account route in the backend
             await axios.post('http://localhost:5000/createaccount/create-account', {
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,
             });
 
-            // Redirect to the login page or wherever you'd like after a successful registration
             window.location.href = '/login';
         } catch (error) {
             if (error.response) {
-                // The request was made and the server responded with a status code
                 console.error('Error response from server:', error.response.data);
                 this.setState({ errorMessage: `Registration failed: ${error.response.data.message}` });
               } else if (error.request) {
-                // The request was made but no response was received
                 console.error('No response received:', error.request);
                 this.setState({ errorMessage: 'Registration failed: No response from server' });
               } else {
-                // Something happened in setting up the request that triggered an error
                 console.error('Error setting up the request:', error.message);
                 this.setState({ errorMessage: `Registration failed: ${error.message}` });
               }

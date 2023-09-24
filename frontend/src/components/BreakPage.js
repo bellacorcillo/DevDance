@@ -1,4 +1,5 @@
 import React from 'react';
+import Navbar from './Navbar';
 import './BreakPage.css';
 
 function BreakPage() {
@@ -21,25 +22,30 @@ function BreakPage() {
   ];
 
   return (
-    <div className="break-container">
-      <div className="break-column">
-        <div className="break-title">Short Break Ideas (Hobbit-Style)</div>
-        {shortBreakIdeas.map((idea, index) => (
-          <div className="break-item" key={index}>
-            {idea}
-          </div>
-        ))}
-      </div>
-      <div className="break-column">
-        <div className="break-title">Long Break Ideas (Elf-Inspired)</div>
-        {longBreakIdeas.map((idea, index) => (
-          <div className="break-item" key={index}>
-            {idea}
-          </div>
-        ))}
+    <div>
+      <Navbar /> {/* Include the Navbar component */}
+      <div className="break-container">
+        <div className="break-column">
+          <div className="break-title">Short Break Ideas (Hobbit-Style)</div>
+          {shortBreakIdeas.map((idea, index) => (
+            <div className="break-item" key={index}>
+              {idea}
+            </div>
+          ))}
+        </div>
+        <div className="break-column">
+          <div className="break-title">Long Break Ideas (Elf-Inspired)</div>
+          {longBreakIdeas.map((idea, index) => (
+            <div className="break-item" key={index}>
+              {idea}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 export default BreakPage;
+
+

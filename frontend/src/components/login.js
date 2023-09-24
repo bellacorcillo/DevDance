@@ -33,7 +33,7 @@ class Login extends React.Component {
             if(response.data.token){
                 localStorage.setItem('token', response.data.token);
                 console.log(response);
-                window.location.href = '/home';
+                window.location.href = '/postlogin';
             }
             else{
                 this.setState({ errorMessage: 'Login failed. Please check your credentials.' });

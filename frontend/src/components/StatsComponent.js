@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./StatsComponent.css";
+import Navbar from './Navbar'; // Import Navbar
+import './StatsComponent.css';
 
 function StatsComponent() {
   const [stats, setStats] = useState(null);
@@ -11,7 +12,7 @@ function StatsComponent() {
       try {
         const response = await axios.get('http://localhost:5000/stats', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Include the user's token for authentication
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
         setStats(response.data);
@@ -26,7 +27,8 @@ function StatsComponent() {
   }, []);
 
   return (
-    <div>
+    <div className="stats-container">
+      <Navbar /> {/* Include the Navbar component */}
       <h2>Stats</h2>
       {loading ? (
         <p>Loading...</p>
@@ -44,3 +46,6 @@ function StatsComponent() {
 }
 
 export default StatsComponent;
+
+
+
