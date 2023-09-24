@@ -1,24 +1,27 @@
 .timer-component {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.5); /* 50% transparency */
-  }
-  
-  .timer-button {
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .timer-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .timer-time {
-    margin-bottom: 10px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 100vh;
+}
+
+.timer-button {
+  margin: 25px;
+  padding: 15px 30px;
+  font-size: 30px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.timer-title {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.timer-time {
+  margin-bottom: 10px;
+  font-size: 48px;
+}

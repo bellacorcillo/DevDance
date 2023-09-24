@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar'; // Import the Navbar component
+import Navbar from './Navbar';
 import './TimerComponent.css';
 
 function TimerComponent() {
@@ -48,14 +48,18 @@ function TimerComponent() {
   return (
     <div className="timer-component">
       <Navbar /> {/* Include the Navbar component */}
-      <h2>Timer</h2>
-      <button onClick={() => startTimer(25)}>Start 25-Minute Timer</button>
-      <button onClick={() => startTimer(45)}>Start 45-Minute Timer</button>
-      {timeLeft > 0 ? <p>Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60}</p> : null}
+      <h2 className="timer-title">Timer</h2>
+      <button className="timer-button" onClick={() => startTimer(25)}>
+        Start 25-Minute Timer
+      </button>
+      <button className="timer-button" onClick={() => startTimer(45)}>
+        Start 45-Minute Timer
+      </button>
+      {timeLeft > 0 ? (
+        <p className="timer-time">Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60}</p>
+      ) : null}
       {timeLeft === 0 && timerDuration === 0 ? <p>Timer is not running.</p> : null}
-      <Link to="/break">
-        Discover Break Ideas Inspired by the Whimsy of Hobbits and Elves!
-      </Link>
+      <Link to="/break">Discover Break Ideas Inspired by the Whimsy of Hobbits and Elves!</Link>
     </div>
   );
 }
