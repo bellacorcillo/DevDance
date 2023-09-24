@@ -7,10 +7,7 @@ function HomePage() {
     return (
         <div style={homePageStyle}>
             <h1>Welcome to the Home Page!</h1>
-            <p>Here, you can explore the amazing world of Middle-earth!</p>
-            
-            {/* Add more features or sections here as you develop your application. */}
-            
+            <p>Here, you can explore the amazing world of Middle-earth!</p>            
             <button onClick={() => navigate('/logout')}>Logout</button>
         </div>
     );

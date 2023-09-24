@@ -8,7 +8,6 @@ const User = require('../models/Users');
 require('dotenv').config();
 
 
-// Logging function for debugging
 const logRequest = (req) => {
     console.log(`Received request: ${req.method} ${req.url}`);
 };
@@ -18,7 +17,6 @@ router.post('/', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
 ], async (req, res) => {
-    // Log the request
     logRequest(req);
 
     const errors = validationResult(req);
@@ -29,14 +27,12 @@ router.post('/', [
     const { email, password } = req.body;
 
     try {
-        // Check if user exists
         let user = await User.findOne({ email });
         if (!user) {
             console.log('Invalid Credentials: User not found');
             return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
 
-        // Check password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             console.log('Invalid Credentials: Password mismatch');
@@ -45,7 +41,6 @@ router.post('/', [
 
         console.log('User logged in successfully');
 
-        // Generate and sign a JWT
         const payload = {
             user: {
                 id: user.id,

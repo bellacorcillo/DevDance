@@ -5,19 +5,15 @@ const { check, validationResult } = require('express-validator');
 const Users = require('../models/Users');
 const Stats = require('../models/Stats');
 
-// Logging function for debugging
 const logRequest = (req) => {
     console.log(`Received request: ${req.method} ${req.url}`);
 };
 
-// @route   POST api/stats
-// @desc    Create or Update user's stats
-// @access  Private
+
 router.post('/', [auth, [
     check('pomodoros', 'Pomodoro count is required and should be an integer').isInt(),
     check('breaks', 'Break count is required and should be an integer').isInt()
 ]], async (req, res) => {
-    // Log the request
     logRequest(req);
 
     const errors = validationResult(req);
@@ -31,14 +27,12 @@ router.post('/', [auth, [
         let stats = await Stats.findOne({ user: req.user.id });
 
         if (!stats) {
-            // If no stats for the user, create new
             stats = new Stats({
                 user: req.user.id,
                 pomodoros,
                 breaks
             });
         } else {
-            // If stats exist, update the stats
             stats.pomodoros += pomodoros;
             stats.breaks += breaks;
         }
@@ -51,11 +45,8 @@ router.post('/', [auth, [
     }
 });
 
-// @route   GET api/stats
-// @desc    Get user's stats
-// @access  Private
+
 router.get('/', auth, async (req, res) => {
-    // Log the request
     logRequest(req);
 
     try {

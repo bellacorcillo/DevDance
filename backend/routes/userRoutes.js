@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/Users.js');
 
-// Registration Route
 router.post('/create-account', [
     check('username', 'Username is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
@@ -53,20 +52,16 @@ router.post('/create-account', [
     }
 });
 
-// Login Route (Keep this route for user login)
 router.post('/login', [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').not().isEmpty()
 ], async (req, res) => {
-    // ... (Your existing login code here)
 });
 
-// Route to seed data
 router.get('/data/seed', async (req, res) => {
     const seedUsers = [
         { username: 'sampleUser', email: 'sample@email.com', password: 'samplePassword' },
         { username: 'sampleUser2', email: 'sample2@email.com', password: 'samplePassword2' },
-        // ... add more seed users here
     ];
 
     try {

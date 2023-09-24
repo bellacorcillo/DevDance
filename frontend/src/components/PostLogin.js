@@ -16,7 +16,6 @@ function PostLogin() {
         }
     },
     React.createElement('h2', null, 'Welcome, Friend!'),
-    // Add your content for the post-login page here using React.createElement
     );
 }
 

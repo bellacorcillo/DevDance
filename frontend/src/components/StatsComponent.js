@@ -7,7 +7,6 @@ function StatsComponent() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch user stats from the backend
     const fetchStats = async () => {
       try {
         const response = await axios.get('http://localhost:5000/stats', {
@@ -24,7 +23,7 @@ function StatsComponent() {
     };
 
     fetchStats();
-  }, []); // The empty dependency array ensures this runs only once when the component mounts
+  }, []);
 
   return (
     <div>
